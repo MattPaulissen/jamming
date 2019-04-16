@@ -14,6 +14,7 @@ class Playlist extends React.Component{
   }
   handleSave(e) {
     this.props.onSave();
+    //Reset input field after saving
     document.getElementById("playlistName").value = 'New Playlist';
   }
   render() {

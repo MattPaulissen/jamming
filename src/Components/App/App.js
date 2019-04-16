@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       searchResults : [
-        
+
       ],
       playlistName: '',
       playlistTracks: [
@@ -24,13 +24,14 @@ class App extends Component {
     this.search = this.search.bind(this);
   }
   addTrack(track){
+    //Check to see if track is already in playlist
     if (this.state.playlistTracks.some(item => {
       return item.id === track.id;
     })) {
       return;
     } else {
       this.setState(state => {
-        const list = state.playlistTracks.concat(track);
+        const list = state.playlistTracks.concat(track);  //Add track to playlist array
         return {
           playlistTracks: list
         };
@@ -39,7 +40,7 @@ class App extends Component {
   }
   removeTrack(track) {
     this.setState(state => {
-      const list = state.playlistTracks.filter(item => {
+      const list = state.playlistTracks.filter(item => {  //filter track from playlist
         return item.id !== track.id;
       });
       return {
@@ -51,7 +52,7 @@ class App extends Component {
     this.setState({playlistName:name});
   }
   savedPlaylist() {
-    if (this.state.playlistName){
+    if (this.state.playlistName){ //Make sure playlist name isn't blonk before saving
       Spotify.savePlaylist(this.state.playlistName, this.state.playlistTracks).then( () => {
         this.setState({
           playlistName: 'New Playlist',
@@ -65,7 +66,7 @@ class App extends Component {
     }
   }
   search(term) {
-    Spotify.getAccessToken();
+    Spotify.getAccessToken(); //Make sure we have an access token before searching
     Spotify.search(term).then(response => {
       this.setState({searchResults: response});
     });
